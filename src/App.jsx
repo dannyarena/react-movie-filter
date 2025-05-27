@@ -13,6 +13,8 @@ function App() {
 
   const [genereSelezionato, setGenereSelezionato] = useState("");
   const [filmFiltrati, setFilmFiltrati] = useState(film);
+
+  
   useEffect(() => {
     if(genereSelezionato === "") {
       setFilmFiltrati(film);
@@ -34,7 +36,7 @@ function App() {
     </select>
 
     <ul>
-      {film.map((movie,index) => (
+      {filmFiltrati.map((movie,index) => (
         <li key={index}>{movie.title} - {movie.genre}</li>
       ))}
     </ul>
