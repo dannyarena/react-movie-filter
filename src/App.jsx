@@ -3,7 +3,7 @@ import './App.css'
 
 function App() {
   const [film, setFilm] = useState([
-  {title: 'Inception', genre: 'Fantascienza'},
+  { title: 'Inception', genre: 'Fantascienza'},
   { title: 'Il Padrino', genre: 'Thriller' },
   { title: 'Titanic', genre: 'Romantico' },
   { title: 'Batman', genre: 'Azione' },
@@ -12,8 +12,14 @@ function App() {
   ]);
 
   return (
-   <div></div>
-  )
+   <div>
+    <ul>
+      {film.map((movie,index) => (
+        <li key={index}>{movie.title} - {movie.genre}</li>
+      ))}
+    </ul>
+   </div>
+  );
 }
 
 export default App
