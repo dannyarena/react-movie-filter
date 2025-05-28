@@ -12,20 +12,33 @@ function App() {
   ]);
 
   const [genereSelezionato, setGenereSelezionato] = useState("");
-  const [filmFiltrati, setFilmFiltrati] = useState(film);
+  const [filmFiltrati, setFilmFiltrati] = useState([film]);
+  const [titoloCercato, setTitoloCercato] = useState("");
 
-  
+  // usiamo useEffect per controllare se l'utente ha scelto un genere, filtrare e aggiornare la UI
   useEffect(() => {
-    if(genereSelezionato === "") {
-      setFilmFiltrati(film);
-    } else {
-      const filmFiltratiPerGenere = film.filter((movie) => movie.genre === genereSelezionato);
-      setFilmFiltrati(filmFiltratiPerGenere);
-    }
-  }, [genereSelezionato, film]);
+    const filmFiltratiPerCondizione = film.filter((movie) => {
+      const condizioneGenere = 
+      genereSelezionato === "" || movie.genre === genereSelezionato;
+
+      const condizioneTitolo = 
+      movie.title.toLowerCase().includes(titoloCercato.toLowerCase());
+
+      return condizioneGenere && condizioneTitolo;
+    });
+    setFilmFiltrati(filmFiltratiPerCondizione);
+  }, [genereSelezionato, titoloCercato, film]
+);
 
   return (
-      // select che salva il valore su setGenereSelezionato
+    <>
+    <input type="text"
+    placeholder='Cerca per titolo'
+    value={titoloCercato}
+    onChange={(e) => setTitoloCercato(e.target.value)} 
+    />
+
+      {/* select che salva il valore su setGenereSelezionato */}
    <div>   
     <select onChange={(e) => setGenereSelezionato(e.target.value)}>
       <option value="">Tutti i generi</option>
@@ -34,13 +47,14 @@ function App() {
       <option value="Romantico">Romantico</option>
       <option value="Azione">Azione</option>
     </select>
-
+      
     <ul>
       {filmFiltrati.map((movie,index) => (
         <li key={index}>{movie.title} - {movie.genre}</li>
       ))}
     </ul>
    </div>
+   </>
   );
 }
 
